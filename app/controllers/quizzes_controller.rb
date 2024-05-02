@@ -24,6 +24,12 @@ class QuizzesController < ApplicationController
 
     # create the first user message
 
+    user_message = Message.new
+    user_message.quiz_id = q.id
+    user_message.role = "user"
+    user_message.content = "Can you assess my #{q.topic} proficiency?"
+    user_message.save
+
     # create the first assistant response
 
     redirect_to "/quizzes/#{q.id}"
