@@ -14,4 +14,16 @@ class QuizzesController < ApplicationController
 
     redirect_to "/quizzes"
   end
+
+  def show
+    # {"the_id"=>"5"}
+
+    q_id = params.fetch("the_id")
+
+    all_matches = Quiz.all.where({ :id => q_id })
+
+    @the_quiz = all_matches.at(0)
+
+    render({ :template => "quiz_templates/details" })
+  end
 end
