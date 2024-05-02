@@ -4,12 +4,24 @@
 
 <hr>
 
-<% @quiz_messages = Message.all.where({ :quiz_id => @the_quiz.id }) %>
+<% @quiz_messages = Message.all.where({ :quiz_id => @the_quiz.id }).order(:created_at) %>
 
 <dl>
   <% @quiz_messages.each do |a_message| %>
     <dt><%= a_message.role %></dt>
     <dd><%= a_message.content %></dd>
   <% end %>
+
+  <dt>user</dt>
+  <dd>
+    <form action="/insert_message" method="post">
+      <textarea placeholder="Enter your response..." cols="50" name="query_content"></textarea>
+
+
+      <input type="hidden" name="query_quiz_id" value="<%= @the_quiz.id %>">
+
+      <button>Add message</button>
+    </form>
+  </dd>
 
 </dl>

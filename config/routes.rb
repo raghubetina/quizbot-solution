@@ -7,4 +7,6 @@ Rails.application.routes.draw do
   # /quizzes/42 - details of one quiz
 
   get("/quizzes/:the_id", { :controller => "quizzes", :action => "show" })
+
+  post("/insert_message", { :controller => "messages", :action => "create" })
 end
