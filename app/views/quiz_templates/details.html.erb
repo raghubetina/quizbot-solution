@@ -1,1 +1,15 @@
 <h1><%= @the_quiz.topic %></h1>
+
+<a href="/quizzes">Go back</a>
+
+<hr>
+
+<% @quiz_messages = Message.all.where({ :quiz_id => @the_quiz.id }) %>
+
+<dl>
+  <% @quiz_messages.each do |a_message| %>
+    <dt><%= a_message.role %></dt>
+    <dd><%= a_message.content %></dd>
+  <% end %>
+
+</dl>
