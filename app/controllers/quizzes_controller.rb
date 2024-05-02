@@ -32,6 +32,28 @@ class QuizzesController < ApplicationController
 
     # create the first assistant response
 
+    prior_messages = [
+      { :role => "system", :content => system_message.content },
+      { :role => "user", :content => user_message.content },
+    ]
+
+    client = OpenAI::Client.new(access_token: ENV.fetch("OPENAI_KEY"))
+
+    api_response = client.chat(
+      parameters: {
+        model: "gpt-4-turbo",
+        messages: prior_messages
+      }
+    )
+
+    # pp api_response
+
+    assistant_message = Message.new
+    assistant_message.quiz_id = q.id
+    assistant_message.role = "assistant"
+    assistant_message.content = api_response.fetch("choices").at(0).fetch("message").fetch("content")
+    assistant_message.save
+
     redirect_to "/quizzes/#{q.id}"
   end
 
