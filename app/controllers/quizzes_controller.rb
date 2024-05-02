@@ -12,7 +12,21 @@ class QuizzesController < ApplicationController
     q.topic = params.fetch("query_topic")
     q.save
 
-    redirect_to "/quizzes"
+    # create the system message
+
+    system_message = Message.new
+    system_message.quiz_id = q.id
+    system_message.role = "system"
+    system_message.content = "You are a #{q.topic} tutor. Ask the user five questions to assess their #{q.topic} proficiency. Start with an easy question. After each answer, increase or decrease the difficulty of the next question based on how well the user answered.
+
+    In the end, provide a score between 0 and 10."
+    system_message.save
+
+    # create the first user message
+
+    # create the first assistant response
+
+    redirect_to "/quizzes/#{q.id}"
   end
 
   def show
